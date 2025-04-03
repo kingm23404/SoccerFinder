@@ -1,12 +1,9 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class FileHandler {
-    // Save players to file
     public static void savePlayers(List<Player> players, String fileName) {
-        try (FileWriter writer = new FileWriter(fileName, true)) {
+        try (FileWriter writer = new FileWriter(fileName)) {
             for (Player player : players) {
                 writer.write(player.toFileFormat() + "\n");
             }
@@ -20,9 +17,8 @@ public class FileHandler {
         List<Player> players = new ArrayList<>();
         File file = new File(fileName);
 
-
         if (!file.exists()) {
-            System.out.println("No existing player file found. A new one will be created.");
+            System.out.println("No existing player file found. Create a new one!");
             return players;
         }
 
@@ -37,7 +33,6 @@ public class FileHandler {
         } catch (IOException e) {
             System.out.println("❌ Error loading players: " + e.getMessage());
         }
-
         return players;
     }
 }

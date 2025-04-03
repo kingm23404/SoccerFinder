@@ -2,31 +2,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MatchMaker {
-    public static List<List<Player>> findMatches(List<Player> players) {
+    public static List<List<Player>> findMatches(List<Player> players, int playersNeeded) {
         List<List<Player>> matches = new ArrayList<>();
         List<Player> beginners = new ArrayList<>();
         List<Player> intermediate = new ArrayList<>();
         List<Player> advanced = new ArrayList<>();
 
-        // Group players by skill level
+
         for (Player p : players) {
             switch (p.getSkillLevel().toLowerCase()) {
-                case "beginner":
-                    beginners.add(p);
-                    break;
-                case "intermediate":
-                    intermediate.add(p);
-                    break;
-                case "advanced":
-                    advanced.add(p);
-                    break;
+                case "beginner" -> beginners.add(p);
+                case "intermediate" -> intermediate.add(p);
+                case "advanced" -> advanced.add(p);
             }
         }
 
-        // Create games from available players
-        if (!beginners.isEmpty()) matches.add(beginners);
-        if (!intermediate.isEmpty()) matches.add(intermediate);
-        if (!advanced.isEmpty()) matches.add(advanced);
+
+        if (beginners.size() >= playersNeeded)
+            matches.add(new ArrayList<>(beginners.subList(0, playersNeeded)));
+        if (intermediate.size() >= playersNeeded)
+            matches.add(new ArrayList<>(intermediate.subList(0, playersNeeded)));
+        if (advanced.size() >= playersNeeded)
+            matches.add(new ArrayList<>(advanced.subList(0, playersNeeded)));
 
         return matches;
     }
